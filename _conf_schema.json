@@ -1,0 +1,114 @@
+{
+    "fortune_name": {
+        "description": "自定义“运势”的名称，会替换所有界面上的“运势”字样",
+        "type": "text",
+        "default": "运势"
+    },
+    "dice_name": {
+        "description": "骰子名称，留空则自动使用“{fortune_name}骰子”",
+        "type": "text",
+        "default": ""
+    },
+    "persona_prompt": {
+        "description": "运势骰子的人格描述，会被嵌入jrrp和feed提示词中",
+        "type": "text",
+        "default": "你是一个调皮的运势骰子。"
+    },
+    "fortune_range": {
+        "description": "数值范围",
+        "type": "object",
+        "items": {
+            "min": {
+                "description": "最小值",
+                "type": "int",
+                "default": 1
+            },
+            "max": {
+                "description": "最大值",
+                "type": "int",
+                "default": 100
+            }
+        }
+    },
+    "jrrp_prompt_template": {
+        "description": "jrrp命令的LLM提示词模板，可使用 {{persona}}、{{fortune_name}} 和 {{fortune_value}} 占位符",
+        "type": "text",
+        "default": "{{persona}}\n请根据以下运势数值，生成一段简短、有趣、适合今日{{fortune_name}}的评论。{{fortune_name}}数值是 {{fortune_value}}（范围1-100，数值越高代表运势越好）。请让评论的语气和内容与数值所代表的运气好坏相匹配。"
+    },
+    "feed_prompt_template": {
+        "description": "feed命令的LLM提示词模板，可使用 {{persona}}、{{fortune_name}}、{{delicacy}}、{{current_fortune}}、{{min_fortune}}、{{max_fortune}} 占位符",
+        "type": "text",
+        "default": "{{persona}}\n用户投喂了 {{delicacy}}。当前用户今日{{fortune_name}}为 {{current_fortune}}，{{fortune_name}}范围是 {{min_fortune}} 到 {{max_fortune}}。\n请根据你的人格和对该食物的喜好，决定{{fortune_name}}值的增减量（整数，增减范围通常在1-10之间，根据喜好程度可适当浮动），并生成一句针对该投喂的回应评论。\n请以JSON格式返回，包含两个字段：delta（整数，正数表示增加，负数表示减少）和 comment（字符串，你的回应评论）。只返回JSON，不要有其他内容。"
+    },
+    "default_comments": {
+        "description": "无LLM时各分数段的默认评论，占位符：{dice_name}、{fortune_name}。注意：仅当enable_llm_comment为false或LLM调用失败时生效。",
+        "type": "object",
+        "items": {
+            "high": {
+                "description": "运势 >= 90",
+                "type": "text",
+                "default": "天降祥瑞！今天{fortune_name}爆表，做什么都如有神助！"
+            },
+            "mid_high": {
+                "description": "90 > 运势 >= 70",
+                "type": "text",
+                "default": "{fortune_name}相当不错，适合出门碰碰运气~"
+            },
+            "mid": {
+                "description": "70 > 运势 >= 50",
+                "type": "text",
+                "default": "{fortune_name}平平无奇，是适合摸鱼的一天。"
+            },
+            "low_mid": {
+                "description": "50 > 运势 >= 30",
+                "type": "text",
+                "default": "{fortune_name}略显低迷……建议多喝热水，少说话。"
+            },
+            "low": {
+                "description": "运势 < 30",
+                "type": "text",
+                "default": "乌云盖顶！今天的{fortune_name}在谷底，要不苟着别出门了。"
+            }
+        }
+    },
+    "feed_comments_increase": {
+        "description": "无LLM时投喂增加运势的随机回复列表，占位符：{delicacy}、{delta}、{fortune_name}",
+        "type": "list",
+        "default": [
+            "美味的{delicacy}！{fortune_name}增加{delta}点！",
+            "好吃！你投喂的{delicacy}让我很开心，{fortune_name}+{delta}",
+            "谢谢你的{delicacy}，今天运气会更好哦～ +{delta}",
+            "唔，{delicacy}真不错，给你添点好运~ +{delta}"
+        ]
+    },
+    "feed_comments_decrease": {
+        "description": "无LLM时投喂减少运势的随机回复列表，占位符与increase相同",
+        "type": "list",
+        "default": [
+            "呃，{delicacy}不太合口味...{fortune_name}减少{delta}点...",
+            "呸呸，这{delicacy}好难吃！{fortune_name}减少{delta}点...",
+            "你居然给我{delicacy}？心情变差了，{fortune_name}-{delta}",
+            "yue...{delicacy}简直可怕，你的{fortune_name}掉了{delta}点。"
+        ]
+    },
+    "data_retention_days": {
+        "description": "数据保留天数（0表示仅保留当天）",
+        "type": "int",
+        "default": 7
+    },
+    "enable_llm_comment": {
+        "description": "是否启用LLM生成评论（影响jrrp和feed）",
+        "type": "bool",
+        "default": true
+    },
+    "allow_regenerate": {
+        "description": "是否允许使用 /jrrp_new 重新生成",
+        "type": "bool",
+        "default": false
+    },
+    "show_fortune_value_first": {
+        "description": "是否优先显示数值",
+        "type": "bool",
+        "default": true
+    }
+}
