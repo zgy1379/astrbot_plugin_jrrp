@@ -1,4 +1,4 @@
-# 🎲 astrbot_plugin_jrrp —— 每日运势 & 投喂插件
+# 🎲 astrbot_plugin_jrrp_only —— 每日运势 & 投喂插件
 
 一个适用于 [AstrBot](https://github.com/Soulter/AstrBot) 的每日运势插件，支持 LLM 生成评论以及通过投喂食物改变运势值。  
 **所有界面文本均可完全自定义**，包括“运势”一词、骰子名称、各分数段默认回复等，亦可根据需要切换为“水逆”、“人品”等任意概念。

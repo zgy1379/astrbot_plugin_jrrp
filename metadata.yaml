@@ -1,4 +1,4 @@
-name: astrbot_plugin_jrrp
+name: astrbot_plugin_jrrp_only
 author: Ulrica Z
 description: 一个运势插件，根据用户ID和日期管理运势值并通过LLM生成评论
 version: 1.0.0

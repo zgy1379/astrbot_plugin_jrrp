@@ -1,5 +1,5 @@
 """
-astrbot_plugin_jrrp - 每日运势插件
+astrbot_plugin_jrrp_only - 每日运势插件
 当接收到命令 /jrrp 时，根据用户ID和日期管理运势值（1-100随机数），并通过LLM生成基于数值的评论。
 数值越高，评论越积极。
 当接收到命令 .feed 时，根据投喂的食物增减运势值，结合人格和LLM判定。
@@ -42,7 +42,7 @@ class JrrpPlugin(Star):
     def __init__(self, context: Context, config: dict):
         super().__init__(context)
         self.config = config
-        self.plugin_name = "astrbot_plugin_jrrp"
+        self.plugin_name = "astrbot_plugin_jrrp_only"
 
         # 可配置的运势名称
         self.fortune_name = self.config.get(self.CONF_FORTUNE_NAME, "运势")
